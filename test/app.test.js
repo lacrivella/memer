@@ -58,4 +58,28 @@ describe('meme routes', () => {
         });
       });
   });
+
+  it('PUT to update a meme', async() => {
+    const meme = await Meme.create({ 
+      top: 'ch-ch-changes', 
+      image: 'url', 
+      bottom: 'lol' });
+
+    return request(app)
+      .put(`/api/v1/memes/${meme._id}`)
+      .send({ 
+        top: 'turn and face the strange', 
+        image: 'irl', 
+        bottom: 'lmao', 
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          top: 'turn and face the strange',
+          image: 'irl',
+          bottom: 'lmao',
+          __v: 0
+        });
+      });
+  });
 });
