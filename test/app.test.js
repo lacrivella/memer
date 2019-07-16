@@ -63,7 +63,8 @@ describe('meme routes', () => {
     const meme = await Meme.create({ 
       top: 'ch-ch-changes', 
       image: 'url', 
-      bottom: 'lol' });
+      bottom: 'lol' 
+    });
 
     return request(app)
       .put(`/api/v1/memes/${meme._id}`)
@@ -78,6 +79,22 @@ describe('meme routes', () => {
           top: 'turn and face the strange',
           image: 'irl',
           bottom: 'lmao',
+          __v: 0
+        });
+      });
+  });
+
+  it('DELETES a meme', async() => {
+    const meme = await Meme.create({ top:'this will', image: 'url', bottom: 'be deleted' });
+
+    return request(app)
+      .delete(`/api/v1/memes/${meme._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          top: 'this will',
+          image: 'url',
+          bottom: 'be deleted',
           __v: 0
         });
       });
