@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
+const Food = require('../lib/models/Food');
 
 describe('food routes', () => {
   beforeAll(() => {
@@ -32,5 +33,14 @@ describe('food routes', () => {
         });
       });
   });
-   
+  //get all
+  it('get all food', async() => {
+    const food = await Food.create({ name: 'icecream', tasty: 9, description: 'sweet'});
+    return request(app)
+      .get('/api/v1/foods')
+      .then(res => {
+        const foodJSON = JSON.parse(JSON.stringify(food));
+        expect(res.body).toEqual([foodJSON]);
+      });
+  });   
 });
