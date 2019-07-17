@@ -66,4 +66,17 @@ describe('color route', () => {
         });
       });
   });
+
+  it('deletes a color', async() => {
+    const color = await Color.create({ name: 'green' });
+    return request(app)
+      .delete(`/api/v1/colors/${color._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'green',
+          __v: 0
+        });
+      });
+  });
 });
