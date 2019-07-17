@@ -39,4 +39,17 @@ describe('color route', () => {
         expect(res.body).toEqual([colorJSON]);
       });
   });
+
+  it('get by id', async() => {
+    const color = await Color.create({ name: 'red' });
+    return request(app)
+      .get(`/api/v1/colors/${color._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'red',
+          __v: 0
+        });
+      });
+  });
 });
