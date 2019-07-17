@@ -35,12 +35,27 @@ describe('food routes', () => {
   });
   //get all
   it('get all food', async() => {
-    const food = await Food.create({ name: 'icecream', tasty: 9, description: 'sweet'});
+    const food = await Food.create({ name: 'icecream', tasty: 9, description: 'sweet' });
     return request(app)
       .get('/api/v1/foods')
       .then(res => {
         const foodJSON = JSON.parse(JSON.stringify(food));
         expect(res.body).toEqual([foodJSON]);
+      });
+  });
+  //get id
+  it('get food by id', async() => {
+    const food = await Food.create({ name: 'icecream', tasty: 9, description: 'sweet' });
+    return request(app)
+      .get(`/api/v1/foods/${food._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'icecream',
+          tasty: 9,
+          description: 'sweet',
+          __v: 0
+        });
       });
   });   
 });
