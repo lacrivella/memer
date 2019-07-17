@@ -37,13 +37,8 @@ describe('animal routes', () => {
         });
       });
   });
-
   it('GET all the animals', async() => {
-    const animal = await Animal.create({ 
-      name: 'peacock', 
-      color: 'cobalt', 
-      extinct: 'no'
-    });
+    const animal = await Animal.create({ name: 'peacock', color: 'cobalt', extinct: 'no' });
     return request(app)
       .get('/api/v1/animals')
       .then(res => {
@@ -51,4 +46,7 @@ describe('animal routes', () => {
         expect(res.body).toEqual([animalJSON]);
       });
   });
+
 });
+
+
