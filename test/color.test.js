@@ -52,4 +52,18 @@ describe('color route', () => {
         });
       });
   });
+
+  it('put color', async() => {
+    const color = await Color.create({ name: 'yellow' });
+    return request(app)
+      .put(`/api/v1/colors/${color._id}`)
+      .send({ name: 'purple' })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'purple',
+          __v: 0
+        });
+      });
+  });
 });
