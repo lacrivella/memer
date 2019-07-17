@@ -57,5 +57,37 @@ describe('food routes', () => {
           __v: 0
         });
       });
+  });
+  //put
+  it('put to update food', async() => {
+    const food = await Food.create({ name: 'salad', tasty: 4, description: 'leafy' });
+    return request(app)
+      .put(`api/v1/foods/${food._id}`)
+      .send({ name: 'cherry', tasty: 7, description: 'fruity' })
+      .then(res => {
+        expect(res.body).toEqual({ 
+          _id: expect.any(String),
+          name: 'cherry',
+          tasty: 7,
+          description: 'fruity',
+          __v: 0
+        });
+      });
+  });
+  //delete
+  it('deletes a food item', async() => {
+    const food = await Food.create({ name: 'tomato', tasty: 1, description: 'ew' });
+
+    return request(app)
+      .delete(`api/v1/foods/${food._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          name: 'tomato',
+          tasty: 1,
+          description: 'ew',
+          __v: 0
+        });
+      });
   });   
 });
