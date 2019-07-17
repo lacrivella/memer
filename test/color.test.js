@@ -4,6 +4,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const connect = require('../lib/utils/connect');
 const mongoose = require('mongoose');
+const Color = require('../lib/models/Color');
 
 describe('color route', () => {
   beforeAll(() => {
@@ -27,5 +28,15 @@ describe('color route', () => {
           __v: 0
         });
       });
-  }); 
+  });
+  
+  it('get all colors', async() => {
+    const color = await Color.create({ name: 'red' });
+    return request(app)
+      .get('/api/v1/colors')
+      .then(res => {
+        const colorJSON = JSON.parse(JSON.stringify(color));
+        expect(res.body).toEqual([colorJSON]);
+      });
+  });
 });
