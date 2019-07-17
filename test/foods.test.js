@@ -62,7 +62,7 @@ describe('food routes', () => {
   it('put to update food', async() => {
     const food = await Food.create({ name: 'salad', tasty: 4, description: 'leafy' });
     return request(app)
-      .put(`api/v1/foods/${food._id}`)
+      .put(`/api/v1/foods/${food._id}`)
       .send({ name: 'cherry', tasty: 7, description: 'fruity' })
       .then(res => {
         expect(res.body).toEqual({ 
@@ -79,7 +79,7 @@ describe('food routes', () => {
     const food = await Food.create({ name: 'tomato', tasty: 1, description: 'ew' });
 
     return request(app)
-      .delete(`api/v1/foods/${food._id}`)
+      .delete(`/api/v1/foods/${food._id}`)
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
@@ -91,3 +91,4 @@ describe('food routes', () => {
       });
   });   
 });
+
